@@ -1,4 +1,2 @@
 .env
 test.py
-dir_to_ignore/
-cogs/__pycache__
