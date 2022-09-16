@@ -2,6 +2,7 @@ import discord
 import os
 from dotenv import load_dotenv #dotenv is used for the .env file 
 from discord.ext import commands
+from discord.commands import Option 
 
 
 #### INITIALISATION ####

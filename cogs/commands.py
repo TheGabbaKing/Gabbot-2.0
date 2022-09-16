@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord.commands import Option
 import random
 
 class Commands(discord.Cog):
@@ -10,7 +11,7 @@ class Commands(discord.Cog):
     ######### PREFIX COMMAND #########
     #@commands.command() #creates a prefixed commands
     #async def hello(self, ctx):
-    #    await ctx.send("Hello")
+    #     await ctx.send("Hello")
 
 
     ######### ON MESSAGE EVENT #########
@@ -45,6 +46,23 @@ class Commands(discord.Cog):
         else:
             await ctx.respond(f"Your penis is {penis} inches long <:gigachad:948481454470484048>")
 
+
+    @discord.slash_command(name="parse", description="Parses URLs to remove sharing properties")
+    async def parse(
+        self, 
+        ctx: discord.ApplicationContext, 
+        url: Option(str, "Paste your URL")
+        ):
+        if url.startswith("https://www.instagram.com") or url.startswith("https://twitter.com"):
+            userUrl = url.split("?") #splits URL into parts
+            if ctx.author.id == self.bot.user.id or ctx.author.id != 487110546223661076: #checks if the user who sent it was the bot or NOT me
+                return
+            elif url.startswith("https://twitter.com"):
+                cutURL = userUrl[0]
+                newURL = cutURL[:8] + "fx" + cutURL[8:]
+                await ctx.respond(f"{newURL}")
+            else:
+                await ctx.respond(f"{userUrl[0]}")
 
 def setup(bot):
     bot.add_cog(Commands(bot)) # add the cog to the bot
