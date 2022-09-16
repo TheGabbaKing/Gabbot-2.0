@@ -8,17 +8,27 @@ class Commands(discord.Cog):
         self.bot = bot
 
     ######### PREFIX COMMAND #########
-    @commands.command() #creates a prefixed commands
-    async def hello(self, ctx):
-        await ctx.send("Hello")
+    #@commands.command() #creates a prefixed commands
+    #async def hello(self, ctx):
+    #    await ctx.send("Hello")
     
     ######### ON MESSAGE EVENT #########
     @commands.Cog.listener()
     async def on_message(self, ctx):
-        if ctx.content == "Aussie Aussie Aussie":
-            await ctx.channel.send("Oi Oi Oi")
-        if ctx.content == "miso":
-            await ctx.channel.send("horny")
+        if ctx.content.startswith("https://www.instagram.com") or ctx.content.startswith("https://twitter.com"):
+            url = ctx.content.split("?") #splits URL into parts
+            if ctx.author.id == self.bot.user.id or ctx.author.id != 487110546223661076: #checks if the user who sent it was the bot or NOT me
+                return
+            elif ctx.content.startswith("https://twitter.com"):
+                cutURL = url[0]
+                newURL = cutURL[:8] + "fx" + cutURL[8:]
+                await ctx.channel.send(f"{newURL}")
+            else:
+                await ctx.channel.send(f"{url[0]}")
+            await ctx.delete()
+
+        
+
 
     ######### PENIS SIZE #########
     @discord.slash_command(name="penis-calculator", description="Calculates your penis size")
@@ -35,6 +45,13 @@ class Commands(discord.Cog):
             await ctx.respond(f"Your penis is {penis} inches long <a:COCKA:824761345509294152>")
         else:
             await ctx.respond(f"Your penis is {penis} inches long <:gigachad:948481454470484048>")
-            
+    
+    @discord.slash_command(name="parse", description="Parses your URL to remove sharing info")
+    async def parse(self, ctx):
+        url = ctx.content 
+        print(url)
+
+
+
 def setup(bot):
     bot.add_cog(Commands(bot)) # add the cog to the bot

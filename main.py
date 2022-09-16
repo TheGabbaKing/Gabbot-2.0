@@ -8,6 +8,8 @@ from discord.ext import commands
 load_dotenv() #loads all the varaiables in the .env file
 bot = commands.Bot(debug_guilds=[524776650945200138]) #debug_guilds serverID of test server (remove debug_guilds during production)
 bot = commands.Bot(intents=discord.Intents.all())
+
+
 bot.load_extension('cogs.commands')
 
 #### COMMANDS/EVENTS ####
