@@ -11,7 +11,8 @@ class Commands(discord.Cog):
     #@commands.command() #creates a prefixed commands
     #async def hello(self, ctx):
     #    await ctx.send("Hello")
-    
+
+
     ######### ON MESSAGE EVENT #########
     @commands.Cog.listener()
     async def on_message(self, ctx):
@@ -26,8 +27,6 @@ class Commands(discord.Cog):
             else:
                 await ctx.channel.send(f"{url[0]}")
             await ctx.delete()
-
-        
 
 
     ######### PENIS SIZE #########
@@ -45,12 +44,6 @@ class Commands(discord.Cog):
             await ctx.respond(f"Your penis is {penis} inches long <a:COCKA:824761345509294152>")
         else:
             await ctx.respond(f"Your penis is {penis} inches long <:gigachad:948481454470484048>")
-    
-    @discord.slash_command(name="parse", description="Parses your URL to remove sharing info")
-    async def parse(self, ctx):
-        url = ctx.content 
-        print(url)
-
 
 
 def setup(bot):

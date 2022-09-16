@@ -17,10 +17,6 @@ bot.load_extension('cogs.commands')
 async def on_ready(): 
     print(f"{bot.user} is ready and online!") #prints in the console that the bot is online
 
-@bot.slash_command(name="hello", description="say hello to the bot")
-async def say_hello(ctx):
-    await ctx.respond("Hey!") #directly replies to the user who used the slash command
-
 bot.run(os.getenv('TOKEN')) # run the bot with the token
 
 
