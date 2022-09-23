@@ -2,6 +2,9 @@ import discord
 from discord.ext import commands
 from discord.commands import Option
 import random
+import uuid
+import requests
+import shutil
 
 class Commands(discord.Cog):
 
@@ -23,8 +26,11 @@ class Commands(discord.Cog):
                 return
             elif ctx.content.startswith("https://twitter.com"):
                 cutURL = url[0]
-                newURL = cutURL[:8] + "fx" + cutURL[8:]
-                await ctx.channel.send(f"{newURL}")
+                if ctx.content.endswith("no"):
+                    await ctx.channel.send(f"{url[0]}")
+                else:
+                    newURL = cutURL[:8] + "fx" + cutURL[8:]
+                    await ctx.channel.send(f"{newURL}")
             else:
                 await ctx.channel.send(f"{url[0]}")
             await ctx.delete()
@@ -63,6 +69,26 @@ class Commands(discord.Cog):
                 await ctx.respond(f"{newURL}")
             else:
                 await ctx.respond(f"{userUrl[0]}")
+
+    @commands.command()
+    async def saveimage(self, ctx):
+        try:
+            url = ctx.message.attachments[0].url
+        except IndexError:
+            print("Error: No attachments")
+            await ctx.send("No attachments found!")
+
+        else:
+            if url[0:26] == "https://cdn.discordapp.com":
+                r = requests.get(url, stream=True)
+                fileName = f'files/{str(uuid.uuid4())}' + '.mp4'
+                with open(fileName, 'wb') as outFile:
+                    print("Saving file: " + fileName)
+                    shutil.copyfileobj(r.raw, outFile)
+                    await ctx.send(file=discord.File(f'{fileName}'))
+
+        
+
 
 def setup(bot):
     bot.add_cog(Commands(bot)) # add the cog to the bot

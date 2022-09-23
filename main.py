@@ -7,7 +7,7 @@ from discord.commands import Option
 
 #### INITIALISATION ####
 load_dotenv() #loads all the varaiables in the .env file
-bot = commands.Bot(debug_guilds=[524776650945200138]) #debug_guilds serverID of test server (remove debug_guilds during production)
+bot = commands.Bot(command_prefix="g.") #(debug_guilds [serverID]) of test server (remove debug_guilds during production)
 bot = commands.Bot(intents=discord.Intents.all())
 
 
